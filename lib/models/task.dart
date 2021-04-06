@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Task {
   final String name;
   bool isDone;
@@ -7,4 +9,11 @@ class Task {
   void toggleDone() {
     isDone = !isDone;
   }
+}
+
+class TaskList {
+  final String title;
+  Icon taskIcon = Icon(Icons.alarm);
+
+  TaskList({this.title, this.taskIcon});
 }

@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
-import 'screens/tasks_screen.dart';
 import 'package:provider/provider.dart';
 import 'models/task_data.dart';
+import 'screens/home.dart';
+import 'models/task_home_data.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TaskData(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TaskData>(create: (context) => TaskData()),
+        ChangeNotifierProvider<TaskListHome>(
+            create: (context) => TaskListHome()),
+      ],
       child: MaterialApp(
-        home: TasksScreen(),
+        debugShowCheckedModeBanner: false,
+        home: Home(),
       ),
     );
   }

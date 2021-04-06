@@ -4,10 +4,15 @@ import 'package:provider/provider.dart';
 import 'package:u_do/screens/add_task_screen.dart';
 import 'package:u_do/models/task_data.dart';
 
+//This screen displays all the tasks in a ListView
 class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.lightBlueAccent,
+      ),
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.lightBlueAccent,

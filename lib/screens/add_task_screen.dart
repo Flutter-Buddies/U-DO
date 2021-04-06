@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:u_do/models/task.dart';
 import 'package:u_do/models/task_data.dart';
 
+//This allows us to add tasks to the ListView
 class AddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,9 +46,11 @@ class AddTaskScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Provider.of<TaskData>(context).addTask(newTaskTitle);
+                Provider.of<TaskData>(context, listen: false)
+                    .addTask(newTaskTitle);
                 Navigator.pop(context);
               },
+              style: TextButton.styleFrom(backgroundColor: Colors.lightBlue),
             ),
           ],
         ),
