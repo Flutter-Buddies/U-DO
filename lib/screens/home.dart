@@ -11,6 +11,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       drawer: Drawer(
         child: Column(
@@ -44,6 +45,7 @@ class TaskHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double textSize = MediaQuery.of(context).size.width / 20;
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<TaskListHome>(builder: (context, tasklist, child) {
@@ -79,8 +81,7 @@ class TaskHome extends StatelessWidget {
                               tasklist.taskList[index].title,
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width / 20,
+                                  fontSize: textSize > 10 ? textSize : 10,
                                   fontWeight: FontWeight.w800),
                               textAlign: TextAlign.center,
                             ),
@@ -97,47 +98,100 @@ class TaskHome extends StatelessWidget {
 //This popup allows the user to add a task
 Widget addTaskListPopup(BuildContext context) {
   String title;
+  double textSize = MediaQuery.of(context).size.width / 20;
 
   return AlertDialog(
-    backgroundColor: Colors.purple,
-    title: Center(
-      child: Text('Add A Task',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: MediaQuery.of(context).size.width / 20,
-              fontWeight: FontWeight.w700,
-              decoration: TextDecoration.underline)),
-    ),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        TextField(
-          cursorColor: Colors.white,
-          autocorrect: true,
-          onChanged: (newTitle) {
-            print(newTitle);
-            title = newTitle;
-          },
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
-        ),
-        SizedBox(
-          height: 30.0,
-        ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              primary: Colors.lightBlue,
-              elevation: 5.0,
-              padding: EdgeInsets.all(20.0)),
-          onPressed: () {
-            Provider.of<TaskListHome>(context, listen: false).addTask(title);
-            Navigator.of(context).pop();
-          },
-          child: Text('Add Task',
-              style: TextStyle(color: Colors.white, fontSize: 20.0)),
-        ),
-      ],
-    ),
-  );
+      backgroundColor: Colors.purple,
+      title: Center(
+        child: Text('Add A Task',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: textSize > 10 ? textSize : 10,
+                fontWeight: FontWeight.w700,
+                decoration: TextDecoration.underline)),
+      ),
+      content: Consumer<TaskListHome>(builder: (context, alert, child) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Stack(
+              alignment: Alignment.topRight,
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                TextFormField(
+                  cursorColor: Colors.black,
+                  autocorrect: true,
+                  onChanged: (newTitle) {
+                    title = newTitle;
+                  },
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 20.0),
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(borderSide: BorderSide.none),
+                      suffixIcon: alert.show
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.error,
+                                color: Colors.red,
+                              ),
+                              onPressed: () {
+                                alert.toggleError();
+                              },
+                            )
+                          : null,
+                      hintText: "Please do not leave the title blank"),
+                ),
+                Positioned(
+                  top: 130,
+                  right: 22,
+                  //You can use your own custom tooltip widget over here in place of below Container
+                  child: alert.show
+                      ? Container(
+                          width: 270,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.red, width: 2.0),
+                              borderRadius: BorderRadius.circular(10)),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Center(
+                            child: Text(
+                              "Please enter a Title!",
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ),
+                SizedBox(
+                  height: 30.0,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.lightBlue,
+                  elevation: 5.0,
+                  padding: EdgeInsets.all(20.0)),
+              onPressed: () {
+                if (title != null) {
+                  Provider.of<TaskListHome>(context, listen: false)
+                      .addTask(title);
+                  Navigator.of(context).pop();
+                  alert.show = false;
+                } else {
+                  alert.toggleError();
+                }
+              },
+              child: Text('Add Task',
+                  style: TextStyle(color: Colors.white, fontSize: 20.0)),
+            ),
+          ],
+        );
+      }));
 }

@@ -16,6 +16,10 @@ class MyApp extends StatelessWidget {
             create: (context) => TaskListHome()),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.lightBlueAccent,
+          accentColor: Colors.green[700],
+        ),
         debugShowCheckedModeBanner: false,
         home: Home(),
       ),

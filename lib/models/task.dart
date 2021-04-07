@@ -15,5 +15,5 @@ class TaskList {
   final String title;
   Icon taskIcon = Icon(Icons.alarm);
 
-  TaskList({this.title, this.taskIcon});
+  TaskList({@required this.title, this.taskIcon});
 }

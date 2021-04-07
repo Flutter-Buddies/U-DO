@@ -12,10 +12,11 @@ class TasksScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.lightBlueAccent,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Theme.of(context).primaryColor,
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: Theme.of(context).primaryColor,
           child: Icon(Icons.add),
           onPressed: () {
             showModalBottomSheet(
@@ -41,7 +42,7 @@ class TasksScreen extends StatelessWidget {
                   child: Icon(
                     Icons.list,
                     size: 30.0,
-                    color: Colors.lightBlueAccent,
+                    color: Theme.of(context).primaryColor,
                   ),
                   backgroundColor: Colors.white,
                   radius: 30.0,
