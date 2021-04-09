@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.deepPurpleAccent,
           canvasColor: Colors.white,
           shadowColor: Colors.black,
+          errorColor: Colors.red,
+          splashColor: Colors.lightBlue,
         ),
         debugShowCheckedModeBanner: false,
         home: Home(),

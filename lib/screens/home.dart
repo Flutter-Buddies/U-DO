@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:u_do/models/task_home_data.dart';
-import 'package:u_do/models/task.dart';
 import 'package:u_do/screens/tasks_screen.dart';
 
 //This widget displays the Home Screen
@@ -30,7 +29,7 @@ class Home extends StatelessWidget {
           "Create",
           style: TextStyle(color: Theme.of(context).canvasColor),
         ),
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: TaskHome(),
     );
@@ -105,7 +104,7 @@ Widget addTaskListPopup(BuildContext context) {
       title: Center(
         child: Text('Add A Task',
             style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).canvasColor,
                 fontSize: textSize > 10 ? textSize : 10,
                 fontWeight: FontWeight.w700,
                 decoration: TextDecoration.underline)),
@@ -120,7 +119,7 @@ Widget addTaskListPopup(BuildContext context) {
               clipBehavior: Clip.none,
               children: <Widget>[
                 TextFormField(
-                  cursorColor: Colors.black,
+                  cursorColor: Theme.of(context).shadowColor,
                   autocorrect: true,
                   onChanged: (newTitle) {
                     title = newTitle;
@@ -136,7 +135,7 @@ Widget addTaskListPopup(BuildContext context) {
                           ? IconButton(
                               icon: Icon(
                                 Icons.error,
-                                color: Colors.red,
+                                color: Theme.of(context).errorColor,
                               ),
                               onPressed: () {
                                 alert.toggleError();
@@ -154,8 +153,10 @@ Widget addTaskListPopup(BuildContext context) {
                           width: 270,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.red, width: 2.0),
+                              color: Theme.of(context).canvasColor,
+                              border: Border.all(
+                                  color: Theme.of(context).errorColor,
+                                  width: 2.0),
                               borderRadius: BorderRadius.circular(10)),
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
@@ -176,7 +177,7 @@ Widget addTaskListPopup(BuildContext context) {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  primary: Colors.lightBlue,
+                  primary: Theme.of(context).splashColor,
                   elevation: 5.0,
                   padding: EdgeInsets.all(20.0)),
               onPressed: () {
@@ -190,7 +191,8 @@ Widget addTaskListPopup(BuildContext context) {
                 }
               },
               child: Text('Add Task',
-                  style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                  style: TextStyle(
+                      color: Theme.of(context).canvasColor, fontSize: 20.0)),
             ),
           ],
         );
