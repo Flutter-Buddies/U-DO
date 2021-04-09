@@ -4,13 +4,19 @@ import 'package:provider/provider.dart';
 import 'package:u_do/screens/add_task_screen.dart';
 import 'package:u_do/models/task_data.dart';
 
+//This screen displays all the tasks in a ListView
 class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).primaryColor,
+        iconTheme: IconThemeData(color: Theme.of(context).canvasColor),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: Theme.of(context).primaryColor,
           child: Icon(Icons.add),
           onPressed: () {
             showModalBottomSheet(
@@ -36,9 +42,9 @@ class TasksScreen extends StatelessWidget {
                   child: Icon(
                     Icons.list,
                     size: 30.0,
-                    color: Colors.lightBlueAccent,
+                    color: Theme.of(context).primaryColor,
                   ),
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).canvasColor,
                   radius: 30.0,
                 ),
                 SizedBox(
@@ -47,7 +53,7 @@ class TasksScreen extends StatelessWidget {
                 Text(
                   'Todoey',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).canvasColor,
                     fontSize: 50.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -55,7 +61,7 @@ class TasksScreen extends StatelessWidget {
                 Text(
                   '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).canvasColor,
                     fontSize: 18,
                   ),
                 ),
@@ -66,7 +72,7 @@ class TasksScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).canvasColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
