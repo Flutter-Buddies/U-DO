@@ -14,7 +14,7 @@ class AddTaskScreen extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(20.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).canvasColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
@@ -42,7 +42,7 @@ class AddTaskScreen extends StatelessWidget {
               child: Text(
                 'Add',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).canvasColor,
                 ),
               ),
               onPressed: () {

@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Theme.of(context).canvasColor),
       ),
       drawer: Drawer(
         child: Column(
@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
         },
         label: Text(
           "Create",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Theme.of(context).canvasColor),
         ),
         backgroundColor: Colors.lightBlueAccent,
       ),
@@ -69,7 +69,7 @@ class TaskHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.alarm,
-                            color: Colors.white,
+                            color: Theme.of(context).canvasColor,
                             size: 50.0,
                           ),
                           SizedBox(
@@ -80,14 +80,14 @@ class TaskHome extends StatelessWidget {
                             child: Text(
                               tasklist.taskList[index].title,
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context).canvasColor,
                                   fontSize: textSize > 10 ? textSize : 10,
                                   fontWeight: FontWeight.w800),
                               textAlign: TextAlign.center,
                             ),
                           ),
                         ]),
-                    color: Colors.deepPurpleAccent,
+                    color: Theme.of(context).accentColor,
                   ),
                 );
               });
@@ -101,7 +101,7 @@ Widget addTaskListPopup(BuildContext context) {
   double textSize = MediaQuery.of(context).size.width / 20;
 
   return AlertDialog(
-      backgroundColor: Colors.purple,
+      backgroundColor: Theme.of(context).accentColor,
       title: Center(
         child: Text('Add A Task',
             style: TextStyle(
@@ -126,10 +126,11 @@ Widget addTaskListPopup(BuildContext context) {
                     title = newTitle;
                   },
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 20.0),
+                  style: TextStyle(
+                      color: Theme.of(context).shadowColor, fontSize: 20.0),
                   decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Theme.of(context).canvasColor,
                       border: OutlineInputBorder(borderSide: BorderSide.none),
                       suffixIcon: alert.show
                           ? IconButton(

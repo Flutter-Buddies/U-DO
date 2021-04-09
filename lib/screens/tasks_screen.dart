@@ -11,8 +11,8 @@ class TasksScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.lightBlueAccent,
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Theme.of(context).primaryColor,
+        iconTheme: IconThemeData(color: Theme.of(context).canvasColor),
       ),
       backgroundColor: Theme.of(context).primaryColor,
       floatingActionButton: FloatingActionButton(
@@ -44,7 +44,7 @@ class TasksScreen extends StatelessWidget {
                     size: 30.0,
                     color: Theme.of(context).primaryColor,
                   ),
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).canvasColor,
                   radius: 30.0,
                 ),
                 SizedBox(
@@ -53,7 +53,7 @@ class TasksScreen extends StatelessWidget {
                 Text(
                   'Todoey',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).canvasColor,
                     fontSize: 50.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -61,7 +61,7 @@ class TasksScreen extends StatelessWidget {
                 Text(
                   '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).canvasColor,
                     fontSize: 18,
                   ),
                 ),
@@ -72,7 +72,7 @@ class TasksScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).canvasColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
