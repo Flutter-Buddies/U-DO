@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:u_do/models/task_home_data.dart';
+import 'package:u_do/screens/settings_screen.dart';
 import 'package:u_do/screens/tasks_screen.dart';
 
 //This widget displays the Home Screen
@@ -15,7 +17,16 @@ class Home extends StatelessWidget {
       drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("Placeholder here"), Text("Placeholder here")],
+          children: [
+            TextButton.icon(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SettingsScreen()));
+              },
+              label: Text('Settings'),
+            )
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(

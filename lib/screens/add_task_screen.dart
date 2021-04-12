@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:u_do/models/task.dart';
 import 'package:u_do/models/task_data.dart';
 
 //This allows us to add tasks to the ListView
