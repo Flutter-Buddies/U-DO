@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:u_do/models/theme.dart';
+import 'package:u_do/helpers/theme.dart';
 
 void main() {
   group('Test ThemeNotifier', () {

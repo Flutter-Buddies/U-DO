@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
 
-import 'package:u_do/models/theme.dart';
+import 'package:u_do/helpers/theme.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override

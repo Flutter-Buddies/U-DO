@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'models/task_data.dart';
 import 'models/task_home_data.dart';
-import 'models/theme.dart';
+import 'helpers/theme.dart';
 import 'screens/home.dart';
 
 void main() async {
