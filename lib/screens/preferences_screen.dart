@@ -16,20 +16,20 @@ class PreferencesScreen extends StatelessWidget {
           PrefTitle(title: Text('Theme')),
           PrefRadio(
             title: Text('Dark Theme'),
-            value: ThemeEnum.darkTheme.index,
+            value: 'dark',
             pref: 'ui_theme',
             onSelect: () {
               Provider.of<ThemeNotifier>(context, listen: false)
-                  .setTheme(CustomTheme.mapTheme(ThemeEnum.darkTheme));
+                  .setTheme(CustomTheme.mapTheme('dark'));
             },
           ),
           PrefRadio(
             title: Text('Light Theme'),
-            value: ThemeEnum.lightTheme.index,
+            value: 'light',
             pref: 'ui_theme',
             onSelect: () {
               Provider.of<ThemeNotifier>(context, listen: false)
-                  .setTheme(CustomTheme.mapTheme(ThemeEnum.lightTheme));
+                  .setTheme(CustomTheme.mapTheme('light'));
             },
           ),
         ],

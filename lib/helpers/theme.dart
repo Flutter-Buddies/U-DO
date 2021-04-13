@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 
-enum ThemeEnum { lightTheme, darkTheme }
-
 class CustomTheme {
-  static ThemeData mapTheme(dynamic theme) {
-    if (theme is int) {
-      theme = ThemeEnum.values[theme];
-    } else {
-      assert(theme is ThemeEnum, 'Should only pass in an int or CustomTheme');
-    }
-
+  static ThemeData mapTheme(String theme) {
     switch (theme) {
-      case ThemeEnum.lightTheme:
+      case 'light':
         return lightTheme;
-      case ThemeEnum.darkTheme:
+      case 'dark':
         return darkTheme;
       default:
         break;

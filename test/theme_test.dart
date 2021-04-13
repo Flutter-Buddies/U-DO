@@ -48,21 +48,8 @@ void main() {
 
   group('Test CustomTheme', () {
     test('Test mapTheme', () {
-      expect(CustomTheme.mapTheme(ThemeEnum.darkTheme), CustomTheme.darkTheme);
-      expect(
-          CustomTheme.mapTheme(ThemeEnum.lightTheme), CustomTheme.lightTheme);
-    });
-
-    test('Test mapTheme type checking', () {
-      CustomTheme.mapTheme(ThemeEnum.darkTheme);
-      CustomTheme.mapTheme(0);
-
-      expect(() {
-        CustomTheme.mapTheme('This should not work');
-      }, throwsA(isA<AssertionError>()));
-      expect(() {
-        CustomTheme.mapTheme(CustomTheme.darkTheme);
-      }, throwsA(isA<AssertionError>()));
+      expect(CustomTheme.mapTheme('dark'), CustomTheme.darkTheme);
+      expect(CustomTheme.mapTheme('light'), CustomTheme.lightTheme);
     });
   });
 }

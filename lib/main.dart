@@ -10,7 +10,7 @@ import 'screens/home.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var service = await PrefServiceShared.init(
-      prefix: 'pref_', defaults: {'ui_theme': ThemeEnum.darkTheme.index});
+      prefix: 'pref_', defaults: {'ui_theme': 'dark'});
   runApp(PrefService(
       service: service,
       child: ChangeNotifierProvider<ThemeNotifier>(
