@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:u_do/helpers/theme.dart';
 
-class SettingsScreen extends StatelessWidget {
+class PreferencesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

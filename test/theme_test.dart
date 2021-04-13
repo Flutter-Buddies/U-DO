@@ -1,21 +1,48 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 
 import 'package:u_do/helpers/theme.dart';
 
 void main() {
   group('Test ThemeNotifier', () {
-    ThemeNotifier themeNotfier;
+    ThemeNotifier themeNotifier;
 
     setUp(() {
-      themeNotfier = ThemeNotifier(CustomTheme.darkTheme);
+      themeNotifier = ThemeNotifier(CustomTheme.darkTheme);
     });
 
     test('Test setTheme', () {
-      themeNotfier.setTheme(CustomTheme.lightTheme);
-      expect(themeNotfier.getTheme(), CustomTheme.lightTheme);
+      themeNotifier.setTheme(CustomTheme.lightTheme);
+      expect(themeNotifier.getTheme(), CustomTheme.lightTheme);
 
-      themeNotfier.setTheme(CustomTheme.darkTheme);
-      expect(themeNotfier.getTheme(), CustomTheme.darkTheme);
+      themeNotifier.setTheme(CustomTheme.darkTheme);
+      expect(themeNotifier.getTheme(), CustomTheme.darkTheme);
+    });
+
+    testWidgets('Test that theme changes', (WidgetTester tester) async {
+      await tester.pumpWidget(ChangeNotifierProvider<ThemeNotifier>(
+          create: (context) => themeNotifier,
+          child: Builder(builder: (BuildContext context) {
+            final appThemeNotifier = Provider.of<ThemeNotifier>(context);
+            return MaterialApp(
+                theme: appThemeNotifier.getTheme(),
+                debugShowCheckedModeBanner: false,
+                home: Container());
+          })));
+
+      await tester.pump();
+
+      final context = tester.element(find.byType(Container));
+
+      expect(Theme.of(context).brightness, CustomTheme.darkTheme.brightness);
+
+      Provider.of<ThemeNotifier>(context, listen: false)
+          .setTheme(CustomTheme.lightTheme);
+
+      await tester.pumpAndSettle();
+
+      expect(Theme.of(context).brightness, CustomTheme.lightTheme.brightness);
     });
   });
 

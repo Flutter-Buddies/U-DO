@@ -13,10 +13,8 @@ class CustomTheme {
     switch (theme) {
       case ThemeEnum.lightTheme:
         return lightTheme;
-        break;
       case ThemeEnum.darkTheme:
         return darkTheme;
-        break;
       default:
         break;
     }
