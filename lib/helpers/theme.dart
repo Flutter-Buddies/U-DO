@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class CustomTheme {
   static ThemeData mapTheme(String theme) {
+    theme = theme.toLowerCase();
     switch (theme) {
       case 'light':
         return lightTheme;
       case 'dark':
         return darkTheme;
       default:
+        assert(false, 'Unknown theme $theme');
         break;
     }
     return darkTheme; // personal preference

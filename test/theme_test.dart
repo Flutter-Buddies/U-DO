@@ -35,6 +35,8 @@ void main() {
 
       final context = tester.element(find.byType(Container));
 
+      // Text theming seems to change based on localization
+      // Checking that the brightness changes should be sufficient for now.
       expect(Theme.of(context).brightness, CustomTheme.darkTheme.brightness);
 
       Provider.of<ThemeNotifier>(context, listen: false)
@@ -50,6 +52,16 @@ void main() {
     test('Test mapTheme', () {
       expect(CustomTheme.mapTheme('dark'), CustomTheme.darkTheme);
       expect(CustomTheme.mapTheme('light'), CustomTheme.lightTheme);
+    });
+
+    test('Test mapTheme string checking', () {
+      // currently only two strings are allowed as themes
+      CustomTheme.mapTheme('dark');
+      CustomTheme.mapTheme('light');
+
+      expect(() {
+        CustomTheme.mapTheme('This should not work');
+      }, throwsA(isA<AssertionError>()));
     });
   });
 }
