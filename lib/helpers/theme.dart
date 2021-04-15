@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CustomTheme {
-  static ThemeData mapTheme(String theme) {
-    theme = theme.toLowerCase();
-    switch (theme) {
+  static ThemeMode mapThemeMode(String themeMode) {
+    assert(themeMode != null, 'theme mode cannot be null');
+
+    themeMode = themeMode.toLowerCase();
+    switch (themeMode) {
       case 'light':
-        return lightTheme;
+        return ThemeMode.light;
       case 'dark':
-        return darkTheme;
+        return ThemeMode.dark;
+      case 'system':
+        return ThemeMode.system;
       default:
-        assert(false, 'Unknown theme $theme');
+        assert(false, 'Unknown theme $themeMode');
         break;
     }
-    return darkTheme; // personal preference
+    return ThemeMode.system;
   }
 
   static var lightTheme = ThemeData(
@@ -34,15 +38,15 @@ class CustomTheme {
       brightness: Brightness.dark);
 }
 
-class ThemeNotifier with ChangeNotifier {
-  ThemeData _themeData;
+class ThemeModeNotifier with ChangeNotifier {
+  ThemeMode _themeMode;
 
-  ThemeNotifier(this._themeData);
+  ThemeModeNotifier(this._themeMode);
 
-  getTheme() => _themeData;
+  getThemeMode() => _themeMode;
 
-  setTheme(ThemeData themeData) async {
-    _themeData = themeData;
+  setThemeMode(ThemeMode themeMode) async {
+    _themeMode = themeMode;
     notifyListeners();
   }
 }

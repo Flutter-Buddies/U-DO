@@ -6,27 +6,29 @@ import 'package:u_do/helpers/theme.dart';
 
 void main() {
   group('Test ThemeNotifier', () {
-    ThemeNotifier themeNotifier;
+    ThemeModeNotifier themeNotifier;
 
     setUp(() {
-      themeNotifier = ThemeNotifier(CustomTheme.darkTheme);
+      themeNotifier = ThemeModeNotifier(ThemeMode.system);
     });
 
     test('Test setTheme', () {
-      themeNotifier.setTheme(CustomTheme.lightTheme);
-      expect(themeNotifier.getTheme(), CustomTheme.lightTheme);
+      themeNotifier.setThemeMode(ThemeMode.light);
+      expect(themeNotifier.getThemeMode(), ThemeMode.light);
 
-      themeNotifier.setTheme(CustomTheme.darkTheme);
-      expect(themeNotifier.getTheme(), CustomTheme.darkTheme);
+      themeNotifier.setThemeMode(ThemeMode.dark);
+      expect(themeNotifier.getThemeMode(), ThemeMode.dark);
     });
 
     testWidgets('Test that theme changes', (WidgetTester tester) async {
-      await tester.pumpWidget(ChangeNotifierProvider<ThemeNotifier>(
+      await tester.pumpWidget(ChangeNotifierProvider<ThemeModeNotifier>(
           create: (context) => themeNotifier,
           child: Builder(builder: (BuildContext context) {
-            final appThemeNotifier = Provider.of<ThemeNotifier>(context);
+            final appThemeNotifier = Provider.of<ThemeModeNotifier>(context);
             return MaterialApp(
-                theme: appThemeNotifier.getTheme(),
+                themeMode: appThemeNotifier.getThemeMode(),
+                darkTheme: CustomTheme.darkTheme,
+                theme: CustomTheme.lightTheme,
                 debugShowCheckedModeBanner: false,
                 home: Container());
           })));
@@ -37,30 +39,31 @@ void main() {
 
       // Text theming seems to change based on localization
       // Checking that the brightness changes should be sufficient for now.
-      expect(Theme.of(context).brightness, CustomTheme.darkTheme.brightness);
+      expect(Theme.of(context).brightness, CustomTheme.lightTheme.brightness);
 
-      Provider.of<ThemeNotifier>(context, listen: false)
-          .setTheme(CustomTheme.lightTheme);
+      Provider.of<ThemeModeNotifier>(context, listen: false)
+          .setThemeMode(ThemeMode.dark);
 
       await tester.pumpAndSettle();
 
-      expect(Theme.of(context).brightness, CustomTheme.lightTheme.brightness);
+      expect(Theme.of(context).brightness, CustomTheme.darkTheme.brightness);
     });
   });
 
   group('Test CustomTheme', () {
     test('Test mapTheme', () {
-      expect(CustomTheme.mapTheme('dark'), CustomTheme.darkTheme);
-      expect(CustomTheme.mapTheme('light'), CustomTheme.lightTheme);
+      expect(CustomTheme.mapThemeMode('dark'), ThemeMode.dark);
+      expect(CustomTheme.mapThemeMode('light'), ThemeMode.light);
+      expect(CustomTheme.mapThemeMode('system'), ThemeMode.system);
     });
 
     test('Test mapTheme string checking', () {
-      // currently only two strings are allowed as themes
-      CustomTheme.mapTheme('dark');
-      CustomTheme.mapTheme('light');
+      expect(() {
+        CustomTheme.mapThemeMode(null);
+      }, throwsA(isA<AssertionError>()));
 
       expect(() {
-        CustomTheme.mapTheme('This should not work');
+        CustomTheme.mapThemeMode('This should not work');
       }, throwsA(isA<AssertionError>()));
     });
   });
