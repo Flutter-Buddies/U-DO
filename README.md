@@ -22,4 +22,13 @@ Check out designs we are considering.
   <img src="notes2.png" width="250">
 </p>
 
+<br/>
 
+### Progress so far
+Rift's log 4/6/2021
+
+<p float="left">
+  <img src="progress.jpg" width="250">
+  &nbsp;&nbsp;
+  <img src="progress2.jpg" width="250">
+</p>
