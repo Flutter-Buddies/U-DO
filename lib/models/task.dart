@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Task {
-  final String name;
+  final String? name;
   bool isDone;
 
   Task({this.name, this.isDone = false});
@@ -12,8 +12,8 @@ class Task {
 }
 
 class TaskList {
-  final String title;
-  Icon taskIcon = Icon(Icons.alarm);
+  final String? title;
+  Icon? taskIcon = Icon(Icons.alarm);
 
-  TaskList({@required this.title, this.taskIcon});
+  TaskList({required this.title, this.taskIcon});
 }

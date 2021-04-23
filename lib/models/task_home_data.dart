@@ -13,14 +13,14 @@ class TaskListHome extends ChangeNotifier {
   }
 
   bool show = false;
-  String textTitle;
+  String? textTitle;
 
   void toggleError() {
     show = !show;
     notifyListeners();
   }
 
-  void addTask(String myTaskTitle) {
+  void addTask(String? myTaskTitle) {
     final task = TaskList(title: myTaskTitle);
     taskList.add(task);
     notifyListeners();
