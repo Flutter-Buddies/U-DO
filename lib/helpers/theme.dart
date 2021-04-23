@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTheme {
   static ThemeMode mapThemeMode(String themeMode) {
-    assert(themeMode != null, 'theme mode cannot be null');
+    assert(themeMode != '', 'theme mode cannot be null');
 
     themeMode = themeMode.toLowerCase();
     switch (themeMode) {

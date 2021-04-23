@@ -59,7 +59,7 @@ void main() {
 
     test('Test mapTheme string checking', () {
       expect(() {
-        CustomTheme.mapThemeMode(null);
+        CustomTheme.mapThemeMode('');
       }, throwsA(isA<AssertionError>()));
 
       expect(() {

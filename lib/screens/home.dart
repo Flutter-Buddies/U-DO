@@ -59,48 +59,50 @@ class TaskHome extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<TaskListHome>(builder: (context, tasklist, child) {
-          return GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 400,
-                  childAspectRatio: 3 / 3,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
-              itemCount: tasklist.taskLength,
-              itemBuilder: (BuildContext context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TasksScreen()));
-                  },
-                  child: Card(
-                    elevation: 5.0,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.alarm,
-                            color: Theme.of(context).canvasColor,
-                            size: 50.0,
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              tasklist.taskList[index].title!,
-                              style: TextStyle(
-                                  color: Theme.of(context).canvasColor,
-                                  fontSize: textSize > 10 ? textSize : 10,
-                                  fontWeight: FontWeight.w800),
-                              textAlign: TextAlign.center,
+          return Scrollbar(
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 400,
+                    childAspectRatio: 3 / 3,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20),
+                itemCount: tasklist.taskLength,
+                itemBuilder: (BuildContext context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => TasksScreen()));
+                    },
+                    child: Card(
+                      elevation: 5.0,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.alarm,
+                              color: Theme.of(context).canvasColor,
+                              size: 50.0,
                             ),
-                          ),
-                        ]),
-                    color: Theme.of(context).accentColor,
-                  ),
-                );
-              });
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text(
+                                tasklist.taskList[index].title!,
+                                style: TextStyle(
+                                    color: Theme.of(context).canvasColor,
+                                    fontSize: textSize > 10 ? textSize : 10,
+                                    fontWeight: FontWeight.w800),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ]),
+                      color: Theme.of(context).accentColor,
+                    ),
+                  );
+                }),
+          );
         }));
   }
 }
