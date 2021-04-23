@@ -88,7 +88,7 @@ class TaskHome extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
-                              tasklist.taskList[index].title,
+                              tasklist.taskList[index].title!,
                               style: TextStyle(
                                   color: Theme.of(context).canvasColor,
                                   fontSize: textSize > 10 ? textSize : 10,
@@ -107,7 +107,7 @@ class TaskHome extends StatelessWidget {
 
 //This popup allows the user to add a task
 Widget addTaskListPopup(BuildContext context) {
-  String title;
+  String? title;
   double textSize = MediaQuery.of(context).size.width / 20;
 
   return AlertDialog(

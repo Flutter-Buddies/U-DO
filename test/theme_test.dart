@@ -6,22 +6,22 @@ import 'package:u_do/helpers/theme.dart';
 
 void main() {
   group('Test ThemeNotifier', () {
-    ThemeModeNotifier themeNotifier;
+    ThemeModeNotifier? themeNotifier;
 
     setUp(() {
       themeNotifier = ThemeModeNotifier(ThemeMode.system);
     });
 
     test('Test setTheme', () {
-      themeNotifier.setThemeMode(ThemeMode.light);
-      expect(themeNotifier.getThemeMode(), ThemeMode.light);
+      themeNotifier!.setThemeMode(ThemeMode.light);
+      expect(themeNotifier!.getThemeMode(), ThemeMode.light);
 
-      themeNotifier.setThemeMode(ThemeMode.dark);
-      expect(themeNotifier.getThemeMode(), ThemeMode.dark);
+      themeNotifier!.setThemeMode(ThemeMode.dark);
+      expect(themeNotifier!.getThemeMode(), ThemeMode.dark);
     });
 
     testWidgets('Test that theme changes', (WidgetTester tester) async {
-      await tester.pumpWidget(ChangeNotifierProvider<ThemeModeNotifier>(
+      await tester.pumpWidget(ChangeNotifierProvider<ThemeModeNotifier?>(
           create: (context) => themeNotifier,
           child: Builder(builder: (BuildContext context) {
             final appThemeNotifier = Provider.of<ThemeModeNotifier>(context);
