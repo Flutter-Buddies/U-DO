@@ -15,8 +15,14 @@ void main() async {
       service: service,
       child: ChangeNotifierProvider<ThemeModeNotifier>(
           create: (context) => ThemeModeNotifier(
-              CustomTheme.mapThemeMode(service.get('ui_theme_mode'))),
-          child: MyApp())));
+              CustomTheme.mapThemeMode(
+            service.get('ui_theme_mode'),
+          ),
+        ),
+        child: MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -25,9 +31,12 @@ class MyApp extends StatelessWidget {
     final themeModeNotifier = Provider.of<ThemeModeNotifier>(context);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<TaskData>(create: (context) => TaskData()),
+        ChangeNotifierProvider<TaskData>(
+          create: (context) => TaskData(),
+        ),
         ChangeNotifierProvider<TaskListHome>(
-            create: (context) => TaskListHome()),
+            create: (context) => TaskListHome(),
+        ),
       ],
       child: MaterialApp(
         themeMode: themeModeNotifier.getThemeMode(),

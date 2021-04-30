@@ -22,7 +22,10 @@ class Home extends StatelessWidget {
               icon: Icon(Icons.settings),
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PreferencesScreen()));
+                    MaterialPageRoute(
+                    builder: (context) => PreferencesScreen(),
+                  ),
+                );
               },
               label: Text('Settings'),
             )
@@ -97,13 +100,17 @@ class TaskHome extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                          ]),
+                          ],
+                    ),
                       color: Theme.of(context).accentColor,
                     ),
                   );
-                }),
+                },
+            ),
           );
-        }));
+        },
+      ),
+    );
   }
 }
 
@@ -120,7 +127,8 @@ Widget addTaskListPopup(BuildContext context) {
                 color: Theme.of(context).canvasColor,
                 fontSize: textSize > 10 ? textSize : 10,
                 fontWeight: FontWeight.w700,
-                decoration: TextDecoration.underline)),
+                decoration: TextDecoration.underline),
+      ),
       ),
       content: Consumer<TaskListHome>(builder: (context, alert, child) {
         return Column(
@@ -170,7 +178,8 @@ Widget addTaskListPopup(BuildContext context) {
                               border: Border.all(
                                   color: Theme.of(context).errorColor,
                                   width: 2.0),
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(10),
+                          ),
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
                             child: Text(
@@ -205,9 +214,12 @@ Widget addTaskListPopup(BuildContext context) {
               },
               child: Text('Add Task',
                   style: TextStyle(
-                      color: Theme.of(context).canvasColor, fontSize: 20.0)),
+                      color: Theme.of(context).canvasColor, fontSize: 20.0),
+              ),
             ),
           ],
         );
-      }));
+      },
+    ),
+  );
 }

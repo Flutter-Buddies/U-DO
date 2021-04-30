@@ -20,7 +20,9 @@ class PreferencesScreen extends StatelessWidget {
             pref: 'ui_theme_mode',
             onSelect: () {
               Provider.of<ThemeModeNotifier>(context, listen: false)
-                  .setThemeMode(CustomTheme.mapThemeMode('system'));
+                  .setThemeMode(
+                CustomTheme.mapThemeMode('system'),
+              );
             },
           ),
           PrefRadio(
@@ -29,7 +31,9 @@ class PreferencesScreen extends StatelessWidget {
             pref: 'ui_theme_mode',
             onSelect: () {
               Provider.of<ThemeModeNotifier>(context, listen: false)
-                  .setThemeMode(CustomTheme.mapThemeMode('dark'));
+                  .setThemeMode(
+                CustomTheme.mapThemeMode('dark'),
+              );
             },
           ),
           PrefRadio(
@@ -38,7 +42,9 @@ class PreferencesScreen extends StatelessWidget {
             pref: 'ui_theme_mode',
             onSelect: () {
               Provider.of<ThemeModeNotifier>(context, listen: false)
-                  .setThemeMode(CustomTheme.mapThemeMode('light'));
+                  .setThemeMode(
+                CustomTheme.mapThemeMode('light'),
+              );
             },
           ),
         ],
