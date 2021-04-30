@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+import 'package:u_do/bloc/bloc/theme_bloc.dart';
 
 import 'models/task_data.dart';
 import 'models/task_home_data.dart';
@@ -11,14 +13,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var service = await PrefServiceShared.init(
       prefix: 'pref_', defaults: {'ui_theme_mode': 'system'});
-  runApp(PrefService(
+  runApp(
+    PrefService(
       service: service,
-      child: ChangeNotifierProvider<ThemeModeNotifier>(
-          create: (context) => ThemeModeNotifier(
-              CustomTheme.mapThemeMode(
-            service.get('ui_theme_mode'),
-          ),
-        ),
+      child: BlocProvider<ThemeBloc>(
+        create: (context) => ThemeBloc(),
         child: MyApp(),
       ),
     ),
@@ -28,18 +27,17 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final themeModeNotifier = Provider.of<ThemeModeNotifier>(context);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TaskData>(
           create: (context) => TaskData(),
         ),
         ChangeNotifierProvider<TaskListHome>(
-            create: (context) => TaskListHome(),
-        ),
+          create: (context) => TaskListHome(),
+        )
       ],
       child: MaterialApp(
-        themeMode: themeModeNotifier.getThemeMode(),
+        themeMode: context.watch<ThemeBloc>().theme,
         darkTheme: CustomTheme.darkTheme,
         theme: CustomTheme.lightTheme,
         debugShowCheckedModeBanner: false,
