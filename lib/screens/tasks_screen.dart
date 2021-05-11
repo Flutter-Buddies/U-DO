@@ -27,8 +27,11 @@ class TasksScreen extends StatelessWidget {
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: AddTaskScreen(),
-                    )));
-          }),
+                    ),
+            ),
+          );
+        },
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pref/pref.dart';
 import 'package:provider/provider.dart';
+import 'package:u_do/bloc/bloc/theme_bloc.dart';
 
 import 'package:u_do/helpers/theme.dart';
 
@@ -19,8 +20,9 @@ class PreferencesScreen extends StatelessWidget {
             value: 'system',
             pref: 'ui_theme_mode',
             onSelect: () {
-              Provider.of<ThemeModeNotifier>(context, listen: false)
-                  .setThemeMode(CustomTheme.mapThemeMode('system'));
+                context
+                  .read<ThemeBloc>()
+                  .add(SetTheme(CustomTheme.mapThemeMode('system')));
             },
           ),
           PrefRadio(
@@ -28,8 +30,9 @@ class PreferencesScreen extends StatelessWidget {
             value: 'dark',
             pref: 'ui_theme_mode',
             onSelect: () {
-              Provider.of<ThemeModeNotifier>(context, listen: false)
-                  .setThemeMode(CustomTheme.mapThemeMode('dark'));
+                context
+                  .read<ThemeBloc>()
+                  .add(SetTheme(CustomTheme.mapThemeMode('dark')));
             },
           ),
           PrefRadio(
@@ -37,8 +40,9 @@ class PreferencesScreen extends StatelessWidget {
             value: 'light',
             pref: 'ui_theme_mode',
             onSelect: () {
-              Provider.of<ThemeModeNotifier>(context, listen: false)
-                  .setThemeMode(CustomTheme.mapThemeMode('light'));
+                context
+                  .read<ThemeBloc>()
+                  .add(SetTheme(CustomTheme.mapThemeMode('light')));
             },
           ),
         ],
