@@ -22,8 +22,16 @@ class Home extends StatelessWidget {
             TextButton.icon(
               icon: Icon(Icons.settings),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PreferencesScreen()));
+// <<<<<<< HEAD
+//                 Navigator.of(context).push(MaterialPageRoute(
+//                     builder: (context) => PreferencesScreen()));
+// =======
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PreferencesScreen(),
+                  ),
+                );
+// >>>>>>> 7b9c1e784e81ca59f7a6101d21840e362587ad9e
               },
               label: Text('Settings'),
             )
@@ -57,6 +65,7 @@ class TaskHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double textSize = MediaQuery.of(context).size.width / 20;
+// <<<<<<< HEAD
     return FutureBuilder(
       future: Provider.of<TaskListHome>(context, listen: false)
           .fetchTaskListAndSet(),
@@ -74,7 +83,7 @@ class TaskHome extends StatelessWidget {
                   ),
                   builder: (context, tasklistItems, child) {
                     return tasklistItems.taskList.length == 0
-                        ? child
+                        ? child!
                         : GridView.builder(
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
@@ -98,7 +107,7 @@ class TaskHome extends StatelessWidget {
                                       MaterialPageRoute(
                                           builder: (context) => TasksScreen(
                                               tasklistItems
-                                                  .taskList[index].id)));
+                                                  .taskList[index].id!)));
                                 },
                                 child: Card(
                                   elevation: 5.0,
@@ -118,7 +127,8 @@ class TaskHome extends StatelessWidget {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 10.0),
                                           child: Text(
-                                            tasklistItems.taskList[index].title,
+                                            tasklistItems
+                                                .taskList[index].title!,
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .canvasColor,
@@ -137,26 +147,82 @@ class TaskHome extends StatelessWidget {
                   }));
         }
       },
+// =======
+//     return Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Consumer<TaskListHome>(builder: (context, tasklist, child) {
+//           return Scrollbar(
+//             child: GridView.builder(
+//                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                     maxCrossAxisExtent: 400,
+//                     childAspectRatio: 3 / 3,
+//                     crossAxisSpacing: 20,
+//                     mainAxisSpacing: 20),
+//                 itemCount: tasklist.taskLength,
+//                 itemBuilder: (BuildContext context, index) {
+//                   return GestureDetector(
+//                     onTap: () {
+//                       Navigator.push(context,
+//                           MaterialPageRoute(builder: (context) => TasksScreen()));
+//                     },
+//                     child: Card(
+//                       elevation: 5.0,
+//                       child: Column(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             Icon(
+//                               Icons.alarm,
+//                               color: Theme.of(context).canvasColor,
+//                               size: 50.0,
+//                             ),
+//                             SizedBox(
+//                               height: 20.0,
+//                             ),
+//                             Padding(
+//                               padding: EdgeInsets.symmetric(horizontal: 10.0),
+//                               child: Text(
+//                                 tasklist.taskList[index].title!,
+//                                 style: TextStyle(
+//                                     color: Theme.of(context).canvasColor,
+//                                     fontSize: textSize > 10 ? textSize : 10,
+//                                     fontWeight: FontWeight.w800),
+//                                 textAlign: TextAlign.center,
+//                               ),
+//                             ),
+//                           ],
+//                     ),
+//                       color: Theme.of(context).accentColor,
+//                     ),
+//                   );
+//                 },
+//             ),
+//           );
+//         },
+//       ),
+// >>>>>>> 7b9c1e784e81ca59f7a6101d21840e362587ad9e
     );
   }
 }
 
 //This popup allows the user to add a task
 Widget addTaskListPopup(BuildContext context) {
-  String title;
+  String? title;
   double textSize = MediaQuery.of(context).size.width / 20;
 
   return AlertDialog(
-      backgroundColor: Theme.of(context).accentColor,
-      title: Center(
-        child: Text('Add A Task',
-            style: TextStyle(
-                color: Theme.of(context).canvasColor,
-                fontSize: textSize > 10 ? textSize : 10,
-                fontWeight: FontWeight.w700,
-                decoration: TextDecoration.underline)),
+    backgroundColor: Theme.of(context).accentColor,
+    title: Center(
+      child: Text(
+        'Add A Task',
+        style: TextStyle(
+            color: Theme.of(context).canvasColor,
+            fontSize: textSize > 10 ? textSize : 10,
+            fontWeight: FontWeight.w700,
+            decoration: TextDecoration.underline),
       ),
-      content: Consumer<TaskListHome>(builder: (context, alert, child) {
+    ),
+    content: Consumer<TaskListHome>(
+      builder: (context, alert, child) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -200,11 +266,12 @@ Widget addTaskListPopup(BuildContext context) {
                           width: 270,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Theme.of(context).canvasColor,
-                              border: Border.all(
-                                  color: Theme.of(context).errorColor,
-                                  width: 2.0),
-                              borderRadius: BorderRadius.circular(10)),
+                            color: Theme.of(context).canvasColor,
+                            border: Border.all(
+                                color: Theme.of(context).errorColor,
+                                width: 2.0),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
                             child: Text(
@@ -237,11 +304,15 @@ Widget addTaskListPopup(BuildContext context) {
                   alert.toggleError();
                 }
               },
-              child: Text('Add Task',
-                  style: TextStyle(
-                      color: Theme.of(context).canvasColor, fontSize: 20.0)),
+              child: Text(
+                'Add Task',
+                style: TextStyle(
+                    color: Theme.of(context).canvasColor, fontSize: 20.0),
+              ),
             ),
           ],
         );
-      }));
+      },
+    ),
+  );
 }

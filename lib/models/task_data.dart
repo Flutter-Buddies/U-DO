@@ -17,7 +17,7 @@ class TaskData extends ChangeNotifier {
         taskListId: taskListId);
     DBHelper.insert('task', {
       'id': task.id.toString(),
-      'title': task.name,
+      'title': task.name.toString(),
       'isDone': 0,
       'task_list_id': task.taskListId
     });
@@ -32,7 +32,7 @@ class TaskData extends ChangeNotifier {
     DBHelper.update('task', {
       'id': task.id.toString(),
       'isDone': task.isDone == true ? 1 : 0,
-      'title': task.name,
+      'title': task.name.toString(),
       'task_list_id': task.taskListId
     });
   }
@@ -41,7 +41,7 @@ class TaskData extends ChangeNotifier {
     tasks.remove(task);
     await DBHelper.delete('task', {
       'id': task.id.toString(),
-      'title': task.name,
+      'title': task.name.toString(),
       'isDone': task.isDone == true ? 1 : 0,
       'task_list_id': task.taskListId
     });

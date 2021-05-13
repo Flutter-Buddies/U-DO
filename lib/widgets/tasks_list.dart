@@ -27,7 +27,7 @@ class TasksList extends StatelessWidget {
             ),
             builder: (context, taskData, child) {
               return taskData.tasks.length == 0
-                  ? child
+                  ? child!
                   : ListView.builder(
                       itemBuilder: (context, index) {
                         final task = taskData.tasks[index];

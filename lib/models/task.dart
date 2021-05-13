@@ -3,11 +3,15 @@ import 'dart:core';
 
 class Task {
   final String id;
-  final String name;
+  final String? name;
   final String taskListId;
   bool isDone;
 
-  Task({this.id, this.name, this.taskListId, this.isDone = false});
+  Task(
+      {required this.id,
+      this.name,
+      required this.taskListId,
+      this.isDone = false});
 
   void toggleDone() {
     isDone = !isDone;
@@ -15,9 +19,9 @@ class Task {
 }
 
 class TaskList {
-  final String id;
-  final String title;
-  Icon taskIcon = Icon(Icons.alarm);
+  final String? title;
+  final String? id;
+  Icon? taskIcon = Icon(Icons.alarm);
 
-  TaskList({this.id, @required this.title, this.taskIcon});
+  TaskList({required this.id, required this.title, this.taskIcon});
 }

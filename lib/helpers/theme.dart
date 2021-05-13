@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTheme {
   static ThemeMode mapThemeMode(String themeMode) {
-    assert(themeMode != null, 'theme mode cannot be null');
+    assert(themeMode != '', 'theme mode cannot be null');
 
     themeMode = themeMode.toLowerCase();
     switch (themeMode) {
@@ -29,12 +29,12 @@ class CustomTheme {
       brightness: Brightness.light);
 
   static var darkTheme = ThemeData(
-      primaryColor: Colors.teal,
-      accentColor: Colors.tealAccent,
-      canvasColor: Colors.black54,
+      primaryColor: Colors.blueAccent,
+      accentColor: Colors.deepPurple,
+      canvasColor: Colors.grey[850],
       shadowColor: Colors.black,
       errorColor: Colors.red,
-      splashColor: Colors.lightBlue,
+      splashColor: Colors.blue,
       brightness: Brightness.dark);
 }
 
