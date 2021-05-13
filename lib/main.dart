@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
     final themeModeNotifier = Provider.of<ThemeModeNotifier>(context);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<TaskData>(create: (context) => TaskData()),
         ChangeNotifierProvider<TaskListHome>(
             create: (context) => TaskListHome()),
+        ChangeNotifierProvider<TaskData>(create: (context) => TaskData()),
       ],
       child: MaterialApp(
         themeMode: themeModeNotifier.getThemeMode(),

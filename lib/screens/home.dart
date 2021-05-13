@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:u_do/models/task_home_data.dart';
 import 'package:u_do/screens/preferences_screen.dart';
 import 'package:u_do/screens/tasks_screen.dart';
+import 'package:u_do/models/task_home_data.dart';
 
 //This widget displays the Home Screen
 class Home extends StatelessWidget {
@@ -21,8 +22,8 @@ class Home extends StatelessWidget {
             TextButton.icon(
               icon: Icon(Icons.settings),
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PreferencesScreen()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PreferencesScreen()));
               },
               label: Text('Settings'),
             )
@@ -56,52 +57,87 @@ class TaskHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double textSize = MediaQuery.of(context).size.width / 20;
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Consumer<TaskListHome>(builder: (context, tasklist, child) {
-          return GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 400,
-                  childAspectRatio: 3 / 3,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
-              itemCount: tasklist.taskLength,
-              itemBuilder: (BuildContext context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TasksScreen()));
-                  },
-                  child: Card(
-                    elevation: 5.0,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.alarm,
-                            color: Theme.of(context).canvasColor,
-                            size: 50.0,
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              tasklist.taskList[index].title,
-                              style: TextStyle(
-                                  color: Theme.of(context).canvasColor,
-                                  fontSize: textSize > 10 ? textSize : 10,
-                                  fontWeight: FontWeight.w800),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ]),
-                    color: Theme.of(context).accentColor,
+    return FutureBuilder(
+      future: Provider.of<TaskListHome>(context, listen: false)
+          .fetchTaskListAndSet(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Consumer<TaskListHome>(
+                  child: Center(
+                    child: Text("No task group. Add a task"),
                   ),
-                );
-              });
-        }));
+                  builder: (context, tasklistItems, child) {
+                    return tasklistItems.taskList.length == 0
+                        ? child
+                        : GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 400,
+                                    childAspectRatio: 3 / 3,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 20),
+                            itemCount: tasklistItems.taskLength,
+                            itemBuilder: (BuildContext context, index) {
+                              return GestureDetector(
+                                //Delete a taskList on longPress
+                                onLongPress: () {
+                                  Provider.of<TaskListHome>(context,
+                                          listen: false)
+                                      .deleteTask(
+                                          tasklistItems.taskList[index]);
+                                },
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => TasksScreen(
+                                              tasklistItems
+                                                  .taskList[index].id)));
+                                },
+                                child: Card(
+                                  elevation: 5.0,
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.alarm,
+                                          color: Theme.of(context).canvasColor,
+                                          size: 50.0,
+                                        ),
+                                        SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10.0),
+                                          child: Text(
+                                            tasklistItems.taskList[index].title,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .canvasColor,
+                                                fontSize: textSize > 10
+                                                    ? textSize
+                                                    : 10,
+                                                fontWeight: FontWeight.w800),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ]),
+                                  color: Theme.of(context).accentColor,
+                                ),
+                              );
+                            });
+                  }));
+        }
+      },
+    );
   }
 }
 
