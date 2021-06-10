@@ -29,12 +29,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<TaskData>(
-          create: (context) => TaskData(),
-        ),
         ChangeNotifierProvider<TaskListHome>(
-          create: (context) => TaskListHome(),
-        )
+            create: (context) => TaskListHome()),
+        ChangeNotifierProvider<TaskData>(create: (context) => TaskData()),
       ],
       child: MaterialApp(
         themeMode: context.watch<ThemeBloc>().theme,

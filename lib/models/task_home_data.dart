@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:u_do/helpers/db_helper.dart';
+import 'dart:core';
 import 'task.dart';
 
 class TaskListHome extends ChangeNotifier {
-  List<TaskList> taskList = [
-    TaskList(title: "Rift's Corner", taskIcon: Icon(Icons.alarm)),
-    TaskList(title: "Hans' Corner", taskIcon: Icon(Icons.run_circle)),
-    TaskList(title: "Buy a Mouse", taskIcon: Icon(Icons.mouse))
-  ];
+  List<TaskList> taskList = [];
 
   int get taskLength {
     return taskList.length;
@@ -20,14 +18,34 @@ class TaskListHome extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTask(String? myTaskTitle) {
-    final task = TaskList(title: myTaskTitle);
+  void addTask(String? myTaskTitle) async {
+    final task = TaskList(id: DateTime.now().toString(), title: myTaskTitle);
     taskList.add(task);
+    await DBHelper.insert('task_list', {
+      'id': task.id.toString(),
+      'title': task.title.toString(),
+    });
     notifyListeners();
   }
 
-  void deleteTask(TaskList task) {
+  void deleteTask(TaskList task) async {
     taskList.remove(task);
+    await DBHelper.delete('task_list', {
+      'id': task.id.toString(),
+      'title': task.title.toString(),
+    });
+    notifyListeners();
+  }
+
+  //Getting the TaskList from local storage and setting it to taskList Model
+  Future<void> fetchTaskListAndSet() async {
+    final taskListData = await DBHelper.getData('task_list');
+    taskList = taskListData
+        .map((task) => TaskList(
+              id: task['id'],
+              title: task['title'],
+            ))
+        .toList();
     notifyListeners();
   }
 }
