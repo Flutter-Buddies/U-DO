@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:u_do/screens/add_task_screen.dart';
 import 'package:u_do/widgets/task_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:u_do/models/task_data.dart';
@@ -31,15 +33,26 @@ class TasksList extends StatelessWidget {
                   : ListView.builder(
                       itemBuilder: (context, index) {
                         final task = taskData.tasks[index];
-                        return TaskTile(
-                          taskTitle: task.name,
-                          isChecked: task.isDone,
-                          checkboxCallback: (checkboxState) {
-                            taskData.updateTask(task);
-                          },
-                          longPressCallback: () {
-                            taskData.deleteTask(task);
-                          },
+                        return Slidable(
+                          key: Key(index.toString()),
+                          actionPane: SlidableDrawerActionPane(),
+                          actionExtentRatio: 0.25,
+                          secondaryActions: <Widget>[
+                            IconSlideAction(
+                              caption: 'Delete',
+                              color: Colors.red,
+                              icon: Icons.delete,
+                              onTap: () {
+                                Provider.of<TaskData>(context,
+                                    listen: false)
+                                    .deleteTask(task);
+                              },
+                            ),
+                          ],
+                          child: TaskTile(
+                            taskTitle: task.name,
+                            isChecked: task.isDone,
+                          ),
                         );
                       },
                       itemCount: taskData.taskCount,

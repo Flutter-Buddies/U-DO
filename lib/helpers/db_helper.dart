@@ -18,55 +18,79 @@ class DBHelper {
       sql.Batch batch = db.batch();
       //task_list table
       batch.execute(
-          'CREATE TABLE task_list(id TEXT PRIMARY KEY,title TEXT NOT NULL)');
+          'CREATE TABLE IF NOT EXISTS task_list(id TEXT PRIMARY KEY,title TEXT NOT NULL)');
       //task table
       batch.execute(
-          'CREATE TABLE task(id TEXT PRIMARY KEY,title TEXT NOT NULL,isDone INTEGER NOT NULL,task_list_id TEXT,FOREIGN KEY (task_list_id) REFERENCES task_list(id) ON UPDATE CASCADE ON DELETE CASCADE)');
+          'CREATE TABLE IF NOT EXISTS task(id TEXT PRIMARY KEY,title TEXT NOT NULL,isDone INTEGER NOT NULL,task_list_id TEXT,FOREIGN KEY (task_list_id) REFERENCES task_list(id) ON UPDATE CASCADE ON DELETE CASCADE)');
       List<dynamic> result = await batch.commit();
-      result.forEach((element) {
-        print(element);
-      });
     }, version: 1);
   }
 
   //Insert Data
   static Future<void> insert(String table, Map<String, Object> data) async {
-    final db = await DBHelper.database();
-    await db.insert(table, data,
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    try{
+      final db = await DBHelper.database();
+      await db.insert(table, data,
+          conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    }on sql.DatabaseException catch(e){
+    print(e.toString());
+  }
+    try{}on sql.DatabaseException catch(e){
+      print(e.toString());
+    }
   }
 
   //Fetch Data for Task List
   static Future<List<Map<String, dynamic>>> getData(String table) async {
-    final db = await DBHelper.database();
-    return db.query(table);
+    List<Map<String, dynamic>> resultSet=[];
+    try{
+      final db = await DBHelper.database();
+       resultSet= await db.query(table);
+    }on sql.DatabaseException catch(e){
+      print(e.toString());
+    }
+  return resultSet;
   }
 
 //Fetch data for Task by their foreign key task_list_id
   static Future<List<Map<String, dynamic>>> getTaskData(
       String table, List<String> whereArgs) async {
-    final db = await DBHelper.database();
-    return await db
-        .query(table, where: 'task_list_id=?', whereArgs: [whereArgs[0]]);
+    List<Map<String, dynamic>> resultSet=[];
+    try{
+      final db = await DBHelper.database();
+      resultSet= await db
+          .query(table, where: 'task_list_id=?', whereArgs: [whereArgs[0]]);
+    }on sql.DatabaseException catch(e){
+      print(e.toString());
+    }
+    return resultSet;
   }
 
 //Update
 //TODO:Get where and where args from the model
   static Future<void> update(String table, Map<String, Object> data) async {
     final db = await DBHelper.database();
-    await db.update(table, data,
-        where: 'id=?',
-        whereArgs: ['id'],
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    try{
+      await db.update(table, data,
+          where: 'id=?',
+          whereArgs: ['id'],
+          conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    }on sql.DatabaseException catch(e){
+      print(e.toString());
+    }
   }
 
   //Delete
   static Future<void> delete(String table, Map<String, Object> data) async {
     final db = await DBHelper.database();
-    int result = await db.delete(
-      table,
-      where: 'id=?',
-      whereArgs: [data['id']],
-    );
+    try{
+        await db.delete(
+        table,
+        where: 'id=?',
+        whereArgs: [data['id']],
+      );
+    }on sql.DatabaseException catch(e){
+      print(e.toString());
+    }
   }
 }

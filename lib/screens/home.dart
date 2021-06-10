@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:u_do/models/task_home_data.dart';
 import 'package:u_do/screens/preferences_screen.dart';
@@ -51,10 +52,6 @@ class Home extends StatelessWidget {
 
 //This widgets contains all the TaskList for users
 class TaskHome extends StatelessWidget {
-  final List<Map> myProducts =
-      List.generate(3, (index) => {"id": index, "name": "Product $index"})
-          .toList();
-
   @override
   Widget build(BuildContext context) {
     double textSize = MediaQuery.of(context).size.width / 20;
@@ -73,8 +70,8 @@ class TaskHome extends StatelessWidget {
                   child: Center(
                     child: Text("No task group. Add a task"),
                   ),
-                  builder: (context, tasklistItems, child) {
-                    return tasklistItems.taskList.length == 0
+                  builder: (context, taskListItems, child) {
+                    return taskListItems.taskList.length == 0
                         ? child!
                         : GridView.builder(
                             gridDelegate:
@@ -83,56 +80,67 @@ class TaskHome extends StatelessWidget {
                                     childAspectRatio: 3 / 3,
                                     crossAxisSpacing: 20,
                                     mainAxisSpacing: 20),
-                            itemCount: tasklistItems.taskLength,
+                            itemCount: taskListItems.taskLength,
                             itemBuilder: (BuildContext context, index) {
-                              return GestureDetector(
-                                //Delete a taskList on longPress
-                                onLongPress: () {
-                                  Provider.of<TaskListHome>(context,
+                              return Slidable(
+                                key: Key(index.toString()),
+                                actionPane: SlidableDrawerActionPane(),
+                                actionExtentRatio: 0.25,
+                                secondaryActions: <Widget>[
+                                  IconSlideAction(
+                                    caption: 'Delete',
+                                    color: Colors.red,
+                                    icon: Icons.delete,
+                                    onTap: () {
+                                      Provider.of<TaskListHome>(context,
                                           listen: false)
-                                      .deleteTask(
-                                          tasklistItems.taskList[index]);
-                                },
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => TasksScreen(
-                                              tasklistItems
-                                                  .taskList[index].id!)));
-                                },
-                                child: Card(
-                                  elevation: 5.0,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.alarm,
-                                          color: Theme.of(context).canvasColor,
-                                          size: 50.0,
-                                        ),
-                                        SizedBox(
-                                          height: 20.0,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10.0),
-                                          child: Text(
-                                            tasklistItems
-                                                .taskList[index].title!,
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: textSize > 10
-                                                    ? textSize
-                                                    : 10,
-                                                fontWeight: FontWeight.w800),
-                                            textAlign: TextAlign.center,
+                                          .deleteTask(
+                                          taskListItems.taskList[index]);
+                                    },
+                                  ),
+                                ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => TasksScreen(
+                                                taskListItems
+                                                    .taskList[index].id!)));
+                                  },
+                                  child: Card(
+                                    elevation: 5.0,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.alarm,
+                                            color: Theme.of(context).canvasColor,
+                                            size: 50.0,
                                           ),
-                                        ),
-                                      ]),
-                                  color: Theme.of(context).accentColor,
+                                          SizedBox(
+                                            height: 20.0,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            child: Text(
+                                              taskListItems
+                                                  .taskList[index].title!,
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: textSize > 10
+                                                      ? textSize
+                                                      : 10,
+                                                  fontWeight: FontWeight.w800),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ]),
+                                    color: Theme.of(context).accentColor,
+                                  ),
                                 ),
                               );
                             });

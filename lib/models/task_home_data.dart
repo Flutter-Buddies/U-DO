@@ -27,7 +27,6 @@ class TaskListHome extends ChangeNotifier {
     });
     notifyListeners();
   }
-
   void deleteTask(TaskList task) async {
     taskList.remove(task);
     await DBHelper.delete('task_list', {

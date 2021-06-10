@@ -26,10 +26,10 @@ class TaskData extends ChangeNotifier {
   }
 
   //We update the whole row
-  void updateTask(Task task) {
+  void updateTask(Task task) async{
     task.toggleDone();
     notifyListeners();
-    DBHelper.update('task', {
+   await DBHelper.update('task', {
       'id': task.id.toString(),
       'isDone': task.isDone == true ? 1 : 0,
       'title': task.name.toString(),
