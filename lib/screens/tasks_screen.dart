@@ -6,10 +6,6 @@ import 'package:u_do/models/task_data.dart';
 
 //This screen displays all the tasks in a ListView
 class TasksScreen extends StatelessWidget {
-  final String task_list_id;
-
-  TasksScreen(this.task_list_id);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +26,12 @@ class TasksScreen extends StatelessWidget {
                         child: Container(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: AddTaskScreen(task_list_id),
-                    )));
-          }),
+                      child: AddTaskScreen(),
+                    ),
+            ),
+          );
+        },
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -82,7 +81,7 @@ class TasksScreen extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(task_list_id),
+              child: TasksList(),
             ),
           ),
         ],
