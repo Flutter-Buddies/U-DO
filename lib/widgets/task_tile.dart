@@ -8,7 +8,7 @@ class TaskTile extends StatelessWidget {
       {this.isChecked,
       this.taskTitle,
       });
-
+//Added new things
   @override
   Widget build(BuildContext context) {
     return ListTile(
