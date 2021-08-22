@@ -9,6 +9,7 @@ import 'models/task_home_data.dart';
 import 'helpers/theme.dart';
 import 'screens/home.dart';
 
+//Main file
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var service = await PrefServiceShared.init(
